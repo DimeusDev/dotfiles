@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=RMPC
+GenericName=Audio Player
+Comment=Console-based Audio Player
+Exec=uwsm-app -- kitty --class rmpc -e rmpc
+Terminal=false
+Categories=Audio;Video;
+Keywords=audio;player;tui;
+Icon=utilities-terminal
+StartupNotify=true

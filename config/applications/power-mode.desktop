@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Power Mode
+GenericName=Visual Performance Mode
+Comment=Toggle Hyprland visual effects on or off
+Exec=bash -c 'exec uwsm-app -- ~/.local/bin/power_mode.sh'
+Terminal=false
+Categories=Settings;System;
+Keywords=power;performance;effects;blur;shadows;animations;battery;
+Icon=preferences-system
+StartupNotify=false

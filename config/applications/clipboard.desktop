@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Clipboard History
+Comment=Browse and paste from clipboard history
+Exec=bash -c 'exec uwsm-app -- rofi -show clipboard -modes "clipboard:$HOME/.local/bin/rofi_cliphist.sh" -theme $HOME/.config/rofi/config.rasi'
+Terminal=false
+Categories=Utility;
+Keywords=clipboard;copy;paste;history;cliphist;
+Icon=edit-paste
+StartupNotify=false

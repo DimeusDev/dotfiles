@@ -1,0 +1,2 @@
+# wheel group to switch tlp profiles without a password. used by waybar battery#tlp
+%wheel ALL=(ALL) NOPASSWD: /usr/bin/tlp ac, /usr/bin/tlp bat, /usr/bin/tlp start

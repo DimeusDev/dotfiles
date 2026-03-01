@@ -1,0 +1,22 @@
+.vscode/
+.idea/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Logs
+*.log
+
+
+

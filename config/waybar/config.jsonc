@@ -1,0 +1,25 @@
+/* waybar
+ * to switch layout change the line 11
+ *   layouts/desktop.jsonc - desktop one no battery networks stuff etc
+ *   layouts/laptop.jsonc  - battery, backlight, power-profile, network, bluetooth
+  *   layouts/laptop-tlp.jsonc  - battery#tlp (work with tlp), backlight, power-profile, network, bluetooth
+ */
+{
+"include": [
+	"$HOME/.config/waybar/Modules",
+	"$HOME/.config/waybar/ModulesWorkspaces",
+	"$HOME/.config/waybar/ModulesCustom",
+	"$HOME/.config/waybar/layouts/desktop.jsonc" /*your prob looking for me ^^*/
+],
+
+"layer": "top",
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+"margin-top": 5,
+"margin-left": 8,
+"margin-right": 8
+}

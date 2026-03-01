@@ -1,0 +1,77 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "source": "arch_small",
+        "type": "auto",
+        "color": {"1": "{{colors.primary.default.hex}}", "2": "{{colors.secondary.default.hex}}"},
+        "padding": {
+            "top": 1
+        }
+    },
+    "display": {
+        "separator": " ",
+        "color": {
+            "separator": "{{colors.outline.default.hex}}",
+            "keys": "{{colors.primary.default.hex}}"
+        }
+    },
+    "modules": [
+        {
+            "key": "╭──────────╮",
+            "type": "custom"
+        },
+        {
+            "key": "│  user   │",
+            "type": "title",
+            "format": "{user-name}"
+        },
+        {
+            "key": "│ 󰅐 uptime │",
+            "type": "command",
+            "text": "up=$(uptime -p | sed 's/up //;s/ weeks,/w/;s/ week,/w/;s/ days,/d/;s/ day,/d/;s/ hours,/h/;s/ hour,/h/;s/ hours/h/;s/ hour/h/;s/ minutes/m/;s/ minute/m/;s/ //g'); inst=$(( ($(date +%s) - $(stat -c %W /)) / 86400 )); echo $up · ${inst}d"
+        },
+        {
+            "key": "│  kernel │",
+            "type": "command",
+            "text": "uname -r"
+        },
+        {
+            "key": "│ 󰇄 desktop │",
+            "type": "de"
+        },
+        {
+            "key": "│ 󰍛 cpu    │",
+            "type": "command",
+            "text": "grep -m1 'model name' /proc/cpuinfo | sed 's/.*: //;s/[0-9][a-z]* Gen //;s/Intel(R) Core(TM) //;s/Intel(R) Xeon(R) //;s/Intel(R) Celeron(R) //;s/Intel(R) Pentium(R) //;s/Intel(R) //;s/AMD //;s/ARM //;s/ @ [0-9.]*.*//;s/ [0-9]*-Core Processor//;s/ ([0-9]*)//g;s/(R)//g;s/(TM)//g;s/  */ /g;s/^ //;s/ $//'"
+        },
+        {
+            "key": "│ 󰢮 gpu    │",
+            "type": "gpu",
+            "hideType": "discrete",
+            "format": "{name}"
+        },
+        {
+            "key": "│ 󰉉 disk   │",
+            "type": "command",
+            "text": "df -B1 / | tail -1 | awk -v f='%.1f/%.1f GB' '{printf f, $3/1073741824, $2/1073741824}'"
+        },
+        {
+            "key": "│  memory │",
+            "type": "command",
+            "text": "free -b | awk -v f='%.1f/%.1f GB' '/^Mem:/ {printf f, $3/1073741824, $2/1073741824}'"
+        },
+        {
+            "key": "├──────────┤",
+            "type": "custom"
+        },
+        {
+            "key": "│  colors │",
+            "type": "colors",
+            "symbol": "circle"
+        },
+        {
+            "key": "╰──────────╯",
+            "type": "custom"
+        }
+    ]
+}

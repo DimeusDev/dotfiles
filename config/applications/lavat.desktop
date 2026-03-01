@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Lavat
+GenericName=Lava Lamp
+Comment=Lava lamp simulation in the terminal
+Exec=bash -c 'exec uwsm-app -- kitty --class lavat -e ~/.local/bin/lavat.sh'
+Terminal=false
+Categories=Utility;
+Keywords=lava;lamp;screensaver;tui;
+Icon=utilities-terminal
+StartupNotify=false

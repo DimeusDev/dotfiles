@@ -1,0 +1,109 @@
+@theme "/dev/null"
+@import "../../.config/matugen/generated/rofi-colors.rasi"
+
+configuration {
+    show-icons: false;
+}
+
+window {
+    transparency:     "real";
+    location:         east;
+    anchor:           east;
+    fullscreen:       false;
+    /* Same dimensions as the original */
+    width:            80px;
+    x-offset:         -7px;
+    y-offset:         0px;
+    enabled:          true;
+    margin:           0px;
+    padding:          0px;
+    border:           0px solid;
+    border-radius:    0px;
+    cursor:           "default";
+    background-color: transparent;
+    border-color:     @outline;
+}
+
+mainbox {
+    enabled:          true;
+    spacing:          15px;
+    margin:           0px;
+    padding:          0px;
+    border:           0px solid;
+    border-radius:    0px;
+    background-color: transparent;
+    children:         [ "listview" ];
+}
+
+listview {
+    enabled:          true;
+    columns:          1;
+    lines:            5;
+    cycle:            true;
+    dynamic:          true;
+    scrollbar:        false;
+    layout:           vertical;
+    reverse:          false;
+    fixed-height:     true;
+    fixed-columns:    true;
+    spacing:          15px;
+    margin:           0px;
+    padding:          15px 10px;
+    border:           0px solid;
+    border-radius:    100%;
+    background-color: @surface;
+    text-color:       @on-surface;
+    cursor:           "default";
+}
+
+element {
+    enabled:          true;
+    margin:           0px;
+    padding:          20px 0px;
+    border:           0px solid;
+    border-radius:    100%;
+    background-color: @surface-container-low;
+    text-color:       @on-surface;
+    cursor:           pointer;
+}
+
+element-text {
+    font:             "JetBrainsMono Nerd Font Propo Bold 19";
+    background-color: transparent;
+    text-color:       inherit;
+    cursor:           inherit;
+    vertical-align:   0.5;
+    horizontal-align: 0.5;
+}
+
+element selected.normal {
+    background-color: @primary;
+    text-color:       @on-primary;
+}
+
+/* Used by the confirmation dialog overlay */
+message {
+    enabled:          true;
+    margin:           0px;
+    padding:          15px;
+    border:           0px solid;
+    border-radius:    100%;
+    background-color: @secondary-container;
+    text-color:       @on-secondary-container;
+}
+
+textbox {
+    background-color: inherit;
+    text-color:       inherit;
+    vertical-align:   0.5;
+    horizontal-align: 0.5;
+    markup:           true;
+}
+
+error-message {
+    padding:          12px;
+    border:           0px solid;
+    border-radius:    10px;
+    background-color: @error-container;
+    text-color:       @on-error-container;
+}

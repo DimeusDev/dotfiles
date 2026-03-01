@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Power Menu
+Comment=Shutdown, reboot, suspend, or logout
+Exec=bash -c 'exec uwsm-app -- ~/.local/bin/powermenu.sh'
+Terminal=false
+Categories=System;
+Keywords=shutdown;reboot;suspend;logout;power;
+Icon=system-shutdown
+StartupNotify=false

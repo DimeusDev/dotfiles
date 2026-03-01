@@ -1,0 +1,199 @@
+; data
+
+(defpoll get_uptime :interval "30s"
+    "uptime -p | sed 's/up //'")
+
+(defpoll get_user :interval "999999s"
+    "whoami")
+
+(defpoll get_light :interval "1s"
+    "brightnessctl -m 2>/dev/null | awk -F, '{gsub(/%/, \"\", $4); print $4}'")
+
+(defpoll cmusic :interval "1s"
+    "playerctl -l 2>/dev/null")
+
+(defpoll pfp_file :interval "999999s"
+    "test -f $HOME/.config/eww/pfp.png && echo $HOME/.config/eww/pfp.png || echo ''")
+
+(defvar get_vol "50")
+(defvar volico "󰕾")
+
+(deflisten get_volume "./scripts/getvol.sh")
+(deflisten music :initial "{}" "./scripts/music.sh")
+(deflisten pmusic :initial "{}" "./scripts/pmusic.sh")
+
+; Window, click-outside quit eww
+
+(defwindow control-panel
+    :monitor 0
+    :stacking "overlay"
+    :focusable false
+    :namespace "eww-control-panel"
+    :geometry (geometry :anchor "top right"
+                        :x "0px"
+                        :y "0px"
+                        :width "100%"
+                        :height "100%")
+    (overlay
+        ; Transparent click-catcher (click outside to close)
+        (eventbox :class "dismiss-area"
+                  :onclick "eww close-all && hyprctl dispatch submap reset"
+                  (box))
+        ; Actual panel content (anchored top-left)
+        (box :halign "start" :valign "start"
+             :style "margin: 5px 0 0 8px;"
+             (panel-widget :uptime get_uptime))))
+
+; Main panel
+
+(defwidget panel-widget [uptime]
+    (box :class "panel"
+         :orientation "v"
+         :space-evenly false
+         :spacing 8
+         :width 380
+         (box :visible false (label :text "${get_volume}"))
+         ; ── Profile card ──
+         (box :class "card profile-card"
+              :space-evenly false
+              :spacing 12
+              (box :class "pfp-circle" :valign "center"
+                   :style {pfp_file != "" ? "background-image: url('${pfp_file}');" : ""}
+                   (label :visible {pfp_file == ""}
+                          :class "pfp-icon" :text "󰀄"))
+              (box :class "pfp-text"
+                   :orientation "v"
+                   :space-evenly false
+                   :hexpand true
+                   (label :class "username" :halign "start" :text "${get_user}")
+                   (label :class "uptime-text" :halign "start"
+                          :limit-width 28 :text "${uptime}")
+                   (box :class "power-row"
+                        :spacing 8
+                        (eventbox :cursor "pointer" :class "pw-btn pw-shutdown"
+                                  :onclick "systemctl poweroff" :tooltip "Shutdown"
+                                  (label :text "⏻"))
+                        (eventbox :cursor "pointer" :class "pw-btn pw-logout"
+                                  :onclick "uwsm stop" :tooltip "Logout"
+                                  (label :text "󰍃"))
+                        (eventbox :cursor "pointer" :class "pw-btn pw-lock"
+                                  :onclick "$HOME/.local/bin/lock.sh" :tooltip "Lock"
+                                  (label :text "󰌾"))
+                        (eventbox :cursor "pointer" :class "pw-btn pw-reboot"
+                                  :onclick "systemctl reboot" :tooltip "Reboot"
+                                  (label :text "󰜉"))
+                        (eventbox :cursor "pointer" :class "pw-btn pw-suspend"
+                                  :onclick "systemctl suspend" :tooltip "Sleep"
+                                  (label :text "󰒲"))))
+              (eventbox :class "close-btn" :cursor "pointer" :valign "start" :halign "end"
+                        :onclick "eww close-all && hyprctl dispatch submap reset"
+                        (label :class "close-icon" :halign "center" :valign "center" :text "×")))
+         ; toggle buttons
+         (box :class "card toggles"
+              :spacing 6
+              (eventbox :class "toggle-btn" :cursor "pointer"
+                        :onclick "nmcli radio wifi | grep -q enabled && nmcli radio wifi off || nmcli radio wifi on"
+                        :tooltip "WiFi"
+                        (label :text "󰤨"))
+              (eventbox :class "toggle-btn" :cursor "pointer"
+                        :onclick "bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on"
+                        :tooltip "Bluetooth"
+                        (label :text "󰂯"))
+              (eventbox :class "toggle-btn" :cursor "pointer"
+                        :onclick "swaync-client -d -sw"
+                        :tooltip "Do Not Disturb"
+                        (label :text "󰂛"))
+              (eventbox :class "toggle-btn" :cursor "pointer"
+                        :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+                        :tooltip "Mute"
+                        (label :text "${volico}"))
+              (eventbox :class "toggle-btn" :cursor "pointer"
+                        :onclick "$HOME/.local/bin/caffeine_toggle.sh"
+                        :tooltip "Caffeine"
+                        (label :text "󰅶")))
+         ; System stats
+         (box :class "card"
+              :spacing 8
+              (box :class "stat-ring" :orientation "v" :space-evenly false
+                   (circular-progress :class "ring ring-cpu"
+                            :value {round(EWW_CPU.avg, 10)}
+                            :thickness 7
+                            :tooltip "${round(EWW_CPU.avg, 1)}%"
+                            (label :class "ring-icon" :text "󰻠"))
+                   (box :class "stat-label" :space-evenly false :halign "center"
+                        (label :class "stat-name" :text "CPU ")
+                        (label :class "stat-val" :text "${round(EWW_CPU.avg, 0)}%")))
+              (box :class "stat-ring" :orientation "v" :space-evenly false
+                   (circular-progress :class "ring ring-ram"
+                            :value {round(EWW_RAM.used_mem_perc, 10)}
+                            :thickness 7
+                            :tooltip "${round(EWW_RAM.used_mem / 1073741824, 1)}GB"
+                            (label :class "ring-icon" :text "󰍛"))
+                   (box :class "stat-label" :space-evenly false :halign "center"
+                        (label :class "stat-name" :text "RAM ")
+                        (label :class "stat-val" :text "${round(EWW_RAM.used_mem_perc, 0)}%")))
+              (box :class "stat-ring" :orientation "v" :space-evenly false
+                   (circular-progress :class "ring ring-disk"
+                            :value {round(EWW_DISK["/"].used_perc, 10)}
+                            :thickness 7
+                            :tooltip "${round(EWW_DISK["/"].used / 1073741824, 1)}GB"
+                            (label :class "ring-icon" :text "󰋊"))
+                   (box :class "stat-label" :space-evenly false :halign "center"
+                        (label :class "stat-name" :text "DISK ")
+                        (label :class "stat-val" :text "${round(EWW_DISK["/"].used_perc, 0)}%"))))
+         ; sliders
+         (box :class "card"
+              :orientation "v"
+              :space-evenly false
+              :spacing 10
+              (box :class "slider-row" :space-evenly false
+                   (label :class "slider-icon vol-color" :text "${volico}")
+                   (scale :class "vol-slider"
+                          :hexpand true
+                          :value get_vol
+                          :max 101 :min 0
+                          :round-digits 0
+                          :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")
+                   (label :class "slider-val" :text "${get_vol}%"))
+              (box :class "slider-row" :space-evenly false
+                   (label :class "slider-icon bright-color" :text "󰃠")
+                   (scale :class "lig-slider"
+                          :hexpand true
+                          :value get_light
+                          :max 101 :min 1
+                          :round-digits 0
+                          :onchange "brightnessctl set {}%")
+                   (label :class "slider-val" :text "${get_light}%")))
+         ; ── Music player ──
+         (music-player)))
+
+; Music player mpris
+
+(defwidget music-player []
+    (box :visible {"${cmusic}" != "" && "${music.title}" != "" && "${music.title}" != "null"}
+         :class "card music"
+              :orientation "v"
+              :space-evenly false
+              (box :class "music-header" :space-evenly false :spacing 12
+                   (box :class "music-art"
+                        :style "background-image: url('${music.thumbnail}');")
+                   (box :class "music-info" :orientation "v" :space-evenly false :hexpand true
+                        (label :class "music-title" :halign "start" :limit-width 24
+                               :text "${music.title}")
+                        (label :class "music-artist" :halign "start" :limit-width 34
+                               :text "${music.artist}")))
+              (scale :class "music-progress"
+                     :min 0
+                     :max {music.length != "" ? music.length : 100}
+                     :value {pmusic.position != "" ? pmusic.position : 0}
+                     :onchange "playerctl position {}")
+              (box :class "music-time"
+                   (label :halign "start" :text "${pmusic.positionStr != "" ? pmusic.positionStr : "0:00"}")
+                   (label :halign "end" :text "${music.lengthStr != "" ? music.lengthStr : "0:00"}"))
+              (box :class "music-controls" :halign "center" :space-evenly false :spacing 40
+                   (eventbox :class "mctl" :cursor "pointer" :onclick "playerctl previous"
+                             (label :text "󰒮"))
+                   (eventbox :class "mctl mctl-play" :cursor "pointer" :onclick "playerctl play-pause"
+                             (label :text {music.status == "Playing" ? "󰏤" : "󰐊"}))
+                   (eventbox :class "mctl" :cursor "pointer" :onclick "playerctl next"
+                             (label :text "󰒭")))))

@@ -1,0 +1,298 @@
+@import "eww-colors";
+
+// global
+* {
+    all: unset;
+    font-family: "Google Sans Flex", "JetBrainsMono Nerd Font Propo", sans-serif;
+    font-weight: bold;
+}
+
+tooltip {
+    padding: 8px 12px;
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: $on-surface;
+}
+
+// dismiss overlay (click-outside to close)
+.dismiss-area {
+    background: transparent;
+}
+
+// panel container (the whole widget)
+.panel {
+    padding: 10px;
+    background-color: rgba($surface-container, 0.65);
+    border-radius: 20px;
+    border: 1px solid rgba($outline-variant, 0.25);
+}
+
+// card - glass container
+.card {
+    background-color: rgba($surface-container-high, 0.55);
+    border-radius: 16px;
+    border: 1px solid rgba($outline-variant, 0.15);
+    padding: 12px;
+}
+
+// profile card
+.pfp-circle {
+    border-radius: 50%;
+    background-color: rgba($primary-container, 0.30);
+    min-width: 64px;
+    min-height: 64px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.pfp-icon {
+    font-family: "JetBrainsMono Nerd Font Propo";
+    font-size: 36px;
+    color: $primary;
+}
+
+.username {
+    font-size: 18px;
+    color: $on-surface;
+}
+
+.uptime-text {
+    font-size: 11px;
+    color: $on-surface-variant;
+    margin-top: 2px;
+}
+
+.power-row {
+    margin-top: 6px;
+}
+
+.pw-btn {
+    font-family: "JetBrainsMono Nerd Font Propo";
+    font-size: 16px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    background-color: rgba($surface-container-highest, 0.40);
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: rgba($primary, 0.18);
+    }
+}
+
+.pw-shutdown,
+.pw-logout,
+.pw-lock,
+.pw-reboot,
+.pw-suspend { color: $on-surface-variant; }
+
+// toggle buttons
+.toggles {
+    padding: 8px;
+}
+
+.toggle-btn {
+    font-family: "JetBrainsMono Nerd Font Propo";
+    font-size: 18px;
+    color: $on-surface-variant;
+    background-color: rgba($surface-container-highest, 0.45);
+    border-radius: 14px;
+    padding: 10px 0;
+    transition: all 0.25s ease;
+
+    &:hover {
+        background-color: rgba($primary, 0.20);
+        color: $primary;
+    }
+}
+
+// system stat rings
+.stat-ring {
+    padding: 8px 4px;
+}
+
+.ring {
+    border-radius: 100px;
+    background-color: rgba($surface-container-lowest, 0.50);
+    min-width: 70px;
+    min-height: 70px;
+}
+
+.ring-cpu  { color: $error; }
+.ring-ram  { color: $primary; }
+.ring-disk { color: $tertiary; }
+
+.ring-icon {
+    font-family: "JetBrainsMono Nerd Font Propo";
+    font-size: 18px;
+    color: $on-surface-variant;
+    margin: 24px;
+}
+
+.stat-label {
+    margin-top: 4px;
+    font-size: 11px;
+}
+
+.stat-name { font-weight: bold; color: $on-surface-variant; }
+.stat-val  { color: $on-surface; }
+
+// sliders
+.slider-row {
+    padding: 2px 4px;
+}
+
+.slider-icon {
+    font-family: "JetBrainsMono Nerd Font Propo";
+    font-size: 16px;
+    min-width: 28px;
+}
+
+.vol-color    { color: $on-surface-variant; }
+.bright-color { color: $on-surface-variant; }
+
+.slider-val {
+    font-size: 11px;
+    color: $on-surface-variant;
+    min-width: 36px;
+}
+
+// volume slider
+.vol-slider {
+    trough {
+        all: unset;
+        background-color: rgba($surface-container-lowest, 0.50);
+        border-radius: 50px;
+        min-height: 8px;
+        margin: 0 8px;
+    }
+
+    slider {
+        all: unset;
+        min-width: 0;
+        min-height: 0;
+        opacity: 0;
+        background-image: none;
+        border: none;
+    }
+
+    trough highlight {
+        all: unset;
+        background-color: $primary;
+        border-radius: 50px;
+    }
+}
+
+// brightness slider
+.lig-slider {
+    trough {
+        all: unset;
+        background-color: rgba($surface-container-lowest, 0.50);
+        border-radius: 50px;
+        min-height: 8px;
+        margin: 0 8px;
+    }
+
+    slider {
+        all: unset;
+        min-width: 0;
+        min-height: 0;
+        opacity: 0;
+        background-image: none;
+        border: none;
+    }
+
+    trough highlight {
+        all: unset;
+        background-color: $tertiary;
+        border-radius: 50px;
+    }
+}
+
+// music player
+.music {
+    margin-top: 0;
+}
+
+.music-art {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 80px;
+    min-width: 80px;
+    border-radius: 12px;
+}
+
+.music-title {
+    font-size: 15px;
+    color: $on-surface;
+    margin-top: 8px;
+}
+
+.music-artist {
+    font-size: 12px;
+    color: $on-surface-variant;
+    margin-top: 4px;
+}
+
+.music-progress {
+    trough {
+        all: unset;
+        background-color: rgba($surface-container-lowest, 0.50);
+        border-radius: 50px;
+        min-height: 4px;
+        margin: 8px 4px 0 4px;
+    }
+
+    trough highlight {
+        all: unset;
+        background-color: $primary;
+        border-radius: 50px;
+    }
+
+    slider {
+        all: unset;
+        min-width: 0;
+        min-height: 0;
+        opacity: 0;
+    }
+}
+
+.music-time {
+    font-size: 10px;
+    color: $on-surface-variant;
+    margin: 2px 4px 4px 4px;
+}
+
+.mctl {
+    font-family: "JetBrainsMono Nerd Font Propo";
+    font-size: 24px;
+    color: $on-surface-variant;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: $primary;
+    }
+}
+
+.mctl-play {
+    font-size: 28px;
+    color: $on-surface;
+}
+
+.close-btn {
+    min-width: 24px;
+    min-height: 24px;
+    background: transparent;
+    color: $on-surface-variant;
+    transition: color 0.2s ease;
+    margin-top: -14px;
+    margin-right: -6px;
+
+    &:hover { color: $error; }
+}
+
+.close-icon {
+    font-size: 20px;
+    font-weight: bold;
+}

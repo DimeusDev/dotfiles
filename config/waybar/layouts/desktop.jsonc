@@ -1,0 +1,13 @@
+/* Desktop layout without battery etc */
+{
+"group/system": {
+	"orientation": "horizontal",
+	"modules": ["cpu", "memory", "temperature", "tray"],
+	"on-scroll-up": "true",
+	"on-scroll-down": "true"
+},
+
+"modules-left":   ["custom/arch", "hyprland/workspaces#rw", "mpris", "custom/cava_mviz"],
+"modules-center": ["clock"],
+"modules-right":  ["pulseaudio", "group/system", "custom/swaync"]
+}

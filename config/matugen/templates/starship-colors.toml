@@ -1,0 +1,47 @@
+add_newline = true
+
+format = '''$directory $git_branch$git_status
+$character'''
+
+right_format = ""
+palette = 'matugen'
+
+[palettes.matugen]
+dir_bg  = '{{colors.primary_container.default.hex}}'
+dir_fg  = '{{colors.on_primary_container.default.hex}}'
+git_bg  = '{{colors.secondary_container.default.hex}}'
+git_fg  = '{{colors.on_secondary_container.default.hex}}'
+dot_fg  = '{{colors.error.default.hex}}'
+
+# directory pill
+[directory]
+home_symbol       = " ~"
+format            = "[](fg:dir_bg)[  $path ](bold bg:dir_bg fg:dir_fg)[](fg:dir_bg)"
+truncation_length = 3
+truncate_to_repo  = true
+
+# git branch
+[git_branch]
+format            = "[](fg:git_bg)[  $branch](bold bg:git_bg fg:git_fg)"
+truncation_length = 30
+
+# git status dot
+[git_status]
+format     = "[$all_status ](bg:git_bg fg:dot_fg)[](fg:git_bg)"
+conflicted = " ●"
+ahead      = " ●"
+behind     = " ●"
+diverged   = " ●"
+untracked  = " ●"
+stashed    = ""
+modified   = " ●"
+staged     = " ●"
+renamed    = ""
+deleted    = " ●"
+up_to_date = ""
+
+# prompt character
+[character]
+success_symbol = "[❯](bold fg:dir_bg)"
+error_symbol   = "[❯](bold red)"
+vimcmd_symbol  = "[❮](bold fg:dir_bg)"

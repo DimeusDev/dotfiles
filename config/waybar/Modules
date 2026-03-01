@@ -1,0 +1,431 @@
+//* ---- 💫 https://github.com/JaKooLit 💫 ---- *//
+/* Waybar Modules */
+
+/* NOTE: hyprland-workspaces, Custom Modules, Custom Vertical & Groups on a separate files */
+
+{
+
+"temperature": {
+	"interval": 10,
+	"tooltip": true,
+	"hwmon-path-abs": "/sys/class/hwmon",
+	"input-filename": "temp1_input",
+	"critical-threshold": 82,
+	"format-critical": "{temperatureC}°C {icon}",
+	"format": "{temperatureC}°C {icon}",
+	"format-icons": [
+		"󰈸"
+	],
+	"on-scroll-up": "true",
+	"on-scroll-down": "true"
+
+},
+
+"backlight": {
+	"interval": 2,
+	"align": 0,
+	"rotate": 0,
+	//"format": "{icon} {percent}%",
+	"format-icons": [
+		" ",
+		" ",
+		" ",
+		"󰃝 ",
+		"󰃞 ",
+		"󰃟 ",
+		"󰃠 "
+	],
+	"format": "{icon}",
+	//"format-icons": ["","","","","","","","","","","","","","",""],
+	"tooltip-format": "backlight {percent}%",
+	"icon-size": 10,
+	"on-click": "",
+	"on-click-middle": "",
+	"on-click-right": "",
+	"on-update": "",
+},
+
+"backlight#2": {
+  "device": "intel_backlight",
+  "format": "{icon} {percent}%",
+  "format-icons": ["", ""]
+},
+
+"battery": {
+	//"interval": 5,
+	"align": 0,
+	"rotate": 0,
+	//"bat": "BAT1",
+	//"adapter": "ACAD",
+	"full-at": 100,
+	"design-capacity": false,
+	"states": {
+		"good": 95,
+		"warning": 30,
+		"critical": 15
+	},
+	"format": "{icon} {capacity}%",
+	"format-charging": " {capacity}%",
+	"format-plugged": "󱘖 {capacity}%",
+	"format-full": "",
+	"format-alt-click": "click",
+	"format-alt": "{icon} {time}",
+	"format-icons": [
+		"󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"
+	],
+	"format-time": "{H}h {M}min",
+	"tooltip": true,
+	"tooltip-format": "{timeTo}\n{power}W",
+	"on-click-middle": "$HOME/.local/bin/power_profile_toggle.sh",
+	"menu": "on-click-right",
+	"menu-file": "$HOME/.config/waybar/context/battery_menu.xml",
+	"menu-actions": {
+		"performance": "$HOME/.local/bin/power_profile_set.sh performance",
+		"balanced": "$HOME/.local/bin/power_profile_set.sh balanced",
+		"power-saver": "$HOME/.local/bin/power_profile_set.sh power-saver",
+		"visual-performance": "$HOME/.local/bin/visual_mode_set.sh performance",
+		"visual-normal": "$HOME/.local/bin/visual_mode_set.sh normal"
+	}
+},
+
+"battery#tlp": {
+	"align": 0,
+	"rotate": 0,
+	"full-at": 100,
+	"design-capacity": false,
+	"states": {
+		"good": 95,
+		"warning": 30,
+		"critical": 15
+	},
+	"format": "{icon} {capacity}%",
+	"format-charging": " {capacity}%",
+	"format-plugged": "󱘖 {capacity}%",
+	"format-full": "",
+	"format-alt-click": "click",
+	"format-alt": "{icon} {time}",
+	"format-icons": [
+		"󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"
+	],
+	"format-time": "{H}h {M}min",
+	"tooltip": true,
+	"tooltip-format": "{timeTo}\n{power}W",
+	"on-click-middle": "$HOME/.local/bin/tlp_profile_toggle.sh",
+	"menu": "on-click-right",
+	"menu-file": "$HOME/.config/waybar/context/battery_menu.xml",
+	"menu-actions": {
+		"performance": "$HOME/.local/bin/tlp_profile_set.sh performance",
+		"balanced": "$HOME/.local/bin/tlp_profile_set.sh balanced",
+		"power-saver": "$HOME/.local/bin/tlp_profile_set.sh power-saver",
+		"visual-performance": "$HOME/.local/bin/visual_mode_set.sh performance",
+		"visual-normal": "$HOME/.local/bin/visual_mode_set.sh normal"
+	}
+},
+
+"bluetooth": {
+    "format": "{}",
+    "format-on": "󰂰",
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "format-connected": "{device_alias}",
+    "format-connected-battery": "{device_alias}",
+    "tooltip-format": "{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}   {device_battery_percentage}%",
+    "on-click": "~/.local/bin/toggle_bluetooth &",
+    "on-click-right": "hyprctl dispatch exec blueman-manager"
+},
+
+"clock": {
+	"interval": 1,
+    "format": " {:%I:%M %p}", // AM PM format
+    //"format": " {:%H:%M:%S}",// 24H
+	"format-alt": " {:%H:%M   %Y, %d %B, %A}",
+	"tooltip-format": "<tt><small>{calendar}</small></tt>",
+	"calendar": {
+		"mode": "year",
+		"mode-mon-col": 3,
+		"weeks-pos": "right",
+		"on-scroll": 1,
+		"format": {
+			"months": "<span color='#ffead3'><b>{}</b></span>",
+			"days": "<span color='#ecc6d9'><b>{}</b></span>",
+			"weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+			"weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+			"today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+		}
+	}
+},
+
+"actions": {
+	"on-click-right": "mode",
+	"on-click-forward": "tz_up",
+	"on-click-backward": "tz_down",
+},
+
+"clock#2": {
+    "format": " {:%I:%M %p}", // AM PM format
+    //"format": "  {:%H:%M}",// 24H
+    "format-alt": "{:%A  |  %H:%M  |  %e %B}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+},
+
+"clock#3": {
+    "format": "{:%I:%M %p - %d/%b}",//for AM/PM
+    //"format": "{:%H:%M - %d/%b}",// 24H
+	"tooltip": false
+},
+
+"clock#4": {
+	"interval": 60,
+    "format": "{:%B | %a %d, %Y | %I:%M %p}",// AM PM format
+    //"format": "{:%B | %a %d, %Y | %H:%M}",// 24H
+	"format-alt": "{:%a %b %d, %G}",
+	"tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+},
+
+"clock#5": {
+    "format": "{:%A, %I:%M %P}",// AM PM format
+    //"format": "{:%a %d | %H:%M}",// 24H
+	"format-alt": "{:%A, %d %B, %Y (%R)}",
+	"tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+},
+
+"cpu": {
+	"format": "{usage}% 󰍛",
+	"format-alt": "{icon0}{icon1}{icon2}{icon3} {usage:>2}% 󰍛",
+	"format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+	"interval": 1,
+	"min-length": 5,
+	"on-click": "true",
+	"on-click-right": "kitty btop",
+	"tooltip": true,
+	"tooltip-format": "CPU: {usage}%",
+	"on-scroll-up": "true",
+	"on-scroll-down": "true"
+},
+
+"disk": {
+	"interval": 30,
+	//"format": "󰋊",
+	"path": "/",
+	//"format-alt-click": "click",
+	"format": "{percentage_used}% 󰋊",
+	//"tooltip": true,
+	"tooltip-format": "{used} used out of {total} on {path} ({percentage_used}%)",
+},
+
+"hyprland/language": {
+	"format": "Lang: {}",
+	"format-en": "US",
+	"format-tr": "Korea",
+	"keyboard-name": "at-translated-set-2-keyboard",
+	"on-click": "hyprctl switchxkblayout $SET_KB next"
+},
+
+"hyprland/submap": {
+	"format": "<span style=\"italic\">  {}</span>", // Icon: expand-arrows-alt
+	"tooltip": false,
+},
+
+"hyprland/window": {
+	"format": "{}",
+	"max-length": 55,
+	"separate-outputs": true,
+	"offscreen-css": true,
+	"offscreen-css-text": "(inactive)",
+	"rewrite": {
+		"(.*) - Mozilla Firefox": " $1",
+		"(.*) - fish": "> [$1]",
+		"(.*) - zsh": "> [$1]",
+		"(.*) - $term": "> [$1]",
+	},
+},
+
+"idle_inhibitor": {
+	"tooltip": true,
+	"tooltip-format-activated": "Idle_inhibitor active",
+	"tooltip-format-deactivated": "Idle_inhibitor not active",
+	"format": "{icon}",
+	"format-icons": {
+		"activated": " ",
+		"deactivated": " ",
+	}
+},
+
+"keyboard-state": {
+	//"numlock": true,
+	"capslock": true,
+	"format": {
+		"numlock": "N {icon}",
+		"capslock": "󰪛 {icon}",
+	},
+	"format-icons": {
+		"locked": "",
+		"unlocked": ""
+	},
+},
+
+"memory": {
+	"interval": 10,
+	"format": "{used:0.1f}G 󰾆",
+	"format-alt": "{percentage}% 󰾆",
+	"tooltip": true,
+	"tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
+	"on-click": "true",
+	"on-click-right": "kitty btop",
+	"on-scroll-up": "true",
+	"on-scroll-down": "true"
+},
+
+"mpris": {
+	"interval": 3,
+	"format": "{player_icon} <i>{dynamic}</i>",
+	"format-paused": "{status_icon} <i>{artist} {title}</i>",
+	"on-click-middle": "playerctl play-pause",
+	"on-click": "playerctl previous",
+	"on-click-right": "playerctl next",
+	"on-scroll-up": "playerctl volume 0.05+",
+	"on-scroll-down": "playerctl volume 0.05-",
+	"tooltip": true,
+	"tooltip-format": "{status_icon} {dynamic}\nLeft Click: previous\nMid Click: Pause\nRight Click: Next\nScroll: Volume",
+	"player-icons": {
+		"chromium": "",
+		"default": "",
+		"firefox": "",
+		"kdeconnect": "",
+		"mopidy": "",
+		"mpv": "󰐹",
+		"spotify": "",
+		"vlc": "󰕼",
+		"kew": "",
+	},
+	"status-icons": {
+		"paused": "󰐎",
+		"playing": "",
+		"stopped": "",
+	},
+	"dynamic-order": ["artist", "title"],
+	"ignored-players": [],
+	"max-length": 50,
+},
+
+"network": {
+	"format": "{ifname}",
+	"format-wifi": "{icon}",
+	"format-ethernet": "󰌘",
+	"format-disconnected": "󰌙",
+	"tooltip-format": "{ipaddr}  {bandwidthUpBits}  {bandwidthDownBits}",
+	"format-linked": "󰈁 {ifname} (No IP)",
+	"tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
+	"tooltip-format-ethernet": "{ifname} 󰌘",
+	"tooltip-format-disconnected": "󰌙 Disconnected",
+	"max-length": 30,
+	"format-icons": [
+		"󰤯", "󰤟", "󰤢", "󰤥", "󰤨"
+	],
+	"on-click-right": "kitty -e nmtui"
+},
+
+"network#speed": {
+	"interval": 1,
+	"format": "{ifname}",
+	"format-wifi": "{icon}  {bandwidthUpBytes}  {bandwidthDownBytes}",
+	"format-ethernet": "󰌘  {bandwidthUpBytes}  {bandwidthDownBytes}",
+	"format-disconnected": "󰌙",
+	"tooltip-format": "{ipaddr}",
+	"format-linked": "󰈁 {ifname} (No IP)",
+	"tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
+	"tooltip-format-ethernet": "{ifname} 󰌘",
+	"tooltip-format-disconnected": "󰌙 Disconnected",
+	"min-length": 24,
+	"max-length": 24,
+	"format-icons": [
+		"󰤯", "󰤟", "󰤢", "󰤥", "󰤨"
+	]
+},
+
+"pulseaudio": {
+	"format": "{icon} {volume}%",
+	"format-bluetooth": "{icon} 󰂰 {volume}%",
+	"format-muted": "󰖁",
+	"format-icons": {
+		"headphone": "",
+		"hands-free": "",
+		"headset": "",
+		"phone": "",
+		"portable": "",
+		"car": "",
+		"default": [
+			"", "", "󰕾",  ""
+		],
+		"ignored-sinks": [
+			"Easy Effects Sink"
+		],
+	},
+	"on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+	"on-click-right": "pavucontrol -t 3",
+	"tooltip-format": "{icon} {desc} | {volume}%",
+},
+
+"pulseaudio#1": {
+  "format": "{icon} {volume}%",
+  "format-bluetooth": "{icon} {volume}%",
+  "format-bluetooth-muted": " {icon}",
+  "format-muted": "󰸈",
+  "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
+    },
+  "on-click": "pamixer --toggle-mute",
+  "on-click-right": "pavucontrol -t 3",
+  "tooltip": true,
+  "tooltip-format": "{icon} {desc} | {volume}%",
+},
+
+"pulseaudio#microphone": {
+	"format": "{format_source}",
+	"format-source": " {volume}%",
+	"format-source-muted": "",
+	"on-click": "$HOME/.local/bin/volume_slider.sh --toggle-mic",
+	"on-click-right": "pavucontrol -t 4",
+	"tooltip-format": "{source_desc} | {source_volume}%",
+},
+
+"tray": {
+	"icon-size": 20,
+	"spacing": 4,
+	"on-scroll-up": "true",
+	"on-scroll-down": "true"
+},
+
+"wireplumber": {
+	"format": "{icon} {volume} %",
+	"format-muted": " Mute",
+	"on-click": "$HOME/.local/bin/volume_slider.sh --toggle",
+	"on-click-right": "pavucontrol -t 3",
+	"format-icons": [
+		"", "", "󰕾", ""
+	],
+},
+
+"wlr/taskbar": {
+	"format": "{icon} {name}",
+	"icon-size": 16,
+	"all-outputs": false,
+	"tooltip-format": "{title}",
+	"on-click": "activate",
+	"on-click-middle": "close",
+	"ignore-list": [
+		"wofi",
+		"rofi",
+		"kitty",
+    "kitty-dropterm"
+		],
+},
+}

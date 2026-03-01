@@ -1,0 +1,13 @@
+/* Laptop layout */
+{
+"group/system": {
+	"orientation": "horizontal",
+	"modules": ["cpu", "memory", "temperature", "tray"],
+	"on-scroll-up": "true",
+	"on-scroll-down": "true"
+},
+
+"modules-left":   ["custom/arch", "battery", "hyprland/workspaces#rw", "mpris", "custom/cava_mviz"],
+"modules-center": ["clock"],
+"modules-right":  ["network", "bluetooth", "pulseaudio", "group/system", "custom/swaync"]
+}

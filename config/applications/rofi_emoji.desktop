@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Rofi Emoji
+GenericName=Emoji Picker
+Comment=Find and copy an emoji
+Exec=bash -c 'exec uwsm-app -- ~/.local/bin/emoji.sh'
+Terminal=false
+Categories=Utility;
+Keywords=expressive;symbols;icons;emoji;
+Icon=face-smile
+StartupNotify=true

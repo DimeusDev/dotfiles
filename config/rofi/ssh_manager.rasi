@@ -1,0 +1,151 @@
+@theme "/dev/null"
+@import "../../.config/matugen/generated/rofi-colors.rasi"
+
+configuration {
+    modi:            "drun";
+    show-icons:      true;
+    hover-select:    true;
+    font:            "Google Sans Flex Regular 11";
+    me-select-entry: "MouseSecondary";
+    me-accept-entry: "MousePrimary";
+    icon-theme:      "Colloid-Dark";
+}
+
+window {
+    enabled:          true;
+    fullscreen:       false;
+    transparency:     "real";
+    cursor:           "default";
+    spacing:          0px;
+    border:           2px;
+    border-radius:    20px;
+    location:         center;
+    anchor:           center;
+    width:            560px;
+    background-color: @surface;
+    border-color:     @outline;
+}
+
+mainbox {
+    enabled:          true;
+    orientation:      vertical;
+    children:         [ "inputbar", "listbox" ];
+    background-color: transparent;
+}
+
+inputbar {
+    enabled:          true;
+    padding:          8px;
+    margin:           10px;
+    background-color: transparent;
+    orientation:      horizontal;
+    children:         [ "entry" ];
+}
+
+entry {
+    enabled:           true;
+    expand:            true;
+    width:             100%;
+    padding:           8px;
+    background-color:  transparent;
+    text-color:        @on-surface;
+    cursor:            text;
+    placeholder:       "  Connect";
+    placeholder-color: @on-surface-variant;
+}
+
+listbox {
+    spacing:          0px;
+    padding:          0px 10px 10px 10px;
+    background-color: transparent;
+    orientation:      vertical;
+    children:         [ "listview" ];
+}
+
+listview {
+    enabled:       true;
+    columns:       1;
+    lines:         10;
+    dynamic:       true;
+    fixed-height:  false;
+    cycle:         true;
+    scrollbar:     false;
+    layout:        vertical;
+    spacing:       4px;
+    padding:       0px;
+    background-color: transparent;
+    border:        0px;
+}
+
+element {
+    enabled:          true;
+    spacing:          10px;
+    padding:          10px 12px;
+    border-radius:    10px;
+    background-color: transparent;
+    cursor:           pointer;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color:       @on-surface;
+}
+
+element normal.active {
+    background-color: @primary;
+    text-color:       @on-primary;
+}
+
+element normal.urgent {
+    background-color: @error;
+    text-color:       @on-surface;
+}
+
+element selected.normal {
+    background-color: @primary;
+    text-color:       @on-primary;
+}
+
+element selected.active {
+    background-color: @primary;
+    text-color:       @on-primary;
+}
+
+element selected.urgent {
+    background-color: @error;
+    text-color:       @on-error;
+}
+
+element alternate.normal,
+element alternate.active,
+element alternate.urgent {
+    background-color: transparent;
+    text-color:       @on-surface;
+}
+
+element-icon {
+    background-color: transparent;
+    text-color:       inherit;
+    size:             36px;
+    cursor:           inherit;
+}
+
+element-text {
+    expand:           true;
+    background-color: transparent;
+    text-color:       inherit;
+    cursor:           inherit;
+    vertical-align:   0.5;
+    horizontal-align: 0.0;
+}
+
+message {
+    background-color: transparent;
+    border:           0px;
+}
+
+error-message {
+    padding:          8px;
+    background-color: @error-container;
+    text-color:       @on-error-container;
+}

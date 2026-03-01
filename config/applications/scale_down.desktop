@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Scale UI Down
+Comment=Decrease display scaling by 0.25
+Exec=bash -c 'exec uwsm-app -- ~/.local/bin/adjust_scale.sh -'
+Terminal=false
+Categories=Settings;
+Icon=zoom-out
+StartupNotify=false

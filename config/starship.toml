@@ -1,0 +1,42 @@
+add_newline = false
+
+format = '''$directory $git_branch$git_status
+$character'''
+
+right_format = ""
+
+# Directory pill
+[directory]
+home_symbol       = " ~"    # ← edit: your home icon + " ~"
+format            = "[ $path ]($style)"   # ← edit: folder icon before $path
+style             = "bold white bg:blue"
+truncation_length = 3
+truncate_to_repo  = true
+
+# Git branch pill
+[git_branch]
+format            = "[ $branch]($style)"
+style             = "bold white bg:purple"
+truncation_length = 30
+
+# git status dot
+[git_status]
+format     = "[$all_status ]($style)"
+style      = "yellow bg:purple"
+conflicted = " ●"
+ahead      = " ●"
+behind     = " ●"
+diverged   = " ●"
+untracked  = " ●"
+stashed    = ""
+modified   = " ●"
+staged     = " ●"
+renamed    = ""
+deleted    = " ●"
+up_to_date = ""
+
+# Prompt character
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol   = "[❯](bold red)"
+vimcmd_symbol  = "[❮](bold green)"

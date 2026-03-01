@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Lock Screen
+Comment=Lock the screen with hyprlock
+Exec=bash -c 'exec uwsm-app -- ~/.local/bin/lock.sh'
+Terminal=false
+Categories=System;Security;
+Keywords=lock;screen;security;hyprlock;
+Icon=system-lock-screen
+StartupNotify=false

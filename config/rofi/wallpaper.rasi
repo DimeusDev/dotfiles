@@ -1,0 +1,66 @@
+@import "~/.config/rofi/newui.rasi"
+
+configuration {
+    modi: "drun";
+    show-icons: true;
+}
+
+window {
+    width: 1200px;
+    background-color: @surface;
+    border-color: @outline;
+}
+
+imagebox {
+    padding: 14px;
+}
+
+inputbar {
+    padding: 10px;
+    background-color: @secondary-container;
+    text-color: @on-secondary-container;
+}
+
+button {
+    background-color: @secondary-container;
+    text-color: @on-secondary-container;
+}
+
+button selected {
+    background-color: @primary;
+    text-color: @on-primary;
+}
+
+entry {
+    placeholder: "Search wallpapers...";
+    text-color: @on-secondary-container;
+}
+
+/* grid layout */
+listview {
+    columns: 4;
+    lines: 3;
+    spacing: 8px;
+    layout: vertical;
+    fixed-height: true;
+    dynamic: true;
+    scrollbar: false;
+}
+
+/* stack icon vertically */
+element {
+    orientation: vertical;
+    spacing: 0px;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+element-icon {
+    size: 180px;
+    border-radius: 6px;
+}
+
+element-text {
+    enabled: false;
+    expand: false;
+}

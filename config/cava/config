@@ -1,0 +1,16 @@
+[general]
+framerate = 60
+bars = 0
+
+[input]
+method = pipewire
+source = auto
+
+[output]
+method = noncurses
+
+[color]
+theme = 'cava-colors'
+
+[smoothing]
+noise_reduction = 77
