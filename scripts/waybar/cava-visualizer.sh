@@ -9,7 +9,8 @@ done
 
 CAVA_CFG="/tmp/cava_cfg_$$"
 PIPELINE_PID=""
-GRACE=5  # second before killing cava
+GRACE=3
+SILENT="▁▁▁▁▁▁▁▁▁▁"
 
 cat > "$CAVA_CFG" <<EOF
 [general]
@@ -46,7 +47,19 @@ has_audio() {
 
 start_pipeline() {
     [[ -n "$PIPELINE_PID" ]] && kill -0 "$PIPELINE_PID" 2>/dev/null && return
-    cava -p "$CAVA_CFG" 2>/dev/null | sed -u "$dict" &
+    cava -p "$CAVA_CFG" 2>/dev/null | sed -u "$dict" | while IFS= read -r f; do
+        if [[ "$f" != "$SILENT" ]]; then
+            silent_since=0
+            echo "$f"
+        elif (( silent_since == 0 )); then
+            printf -v silent_since '%(%s)T' -1
+            echo "$f"
+        elif (( $(printf '%(%s)T' -1) - silent_since < GRACE )); then
+            echo "$f"
+        else
+            echo ""
+        fi
+    done &
     PIPELINE_PID=$!
 }
 

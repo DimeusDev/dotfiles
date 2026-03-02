@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# figlet lyrics via sptlrx pipe
+
+# Save terminal state
+old_stty=$(stty -g)
+
+cleanup() {
+    kill "$KEY_PID" 2>/dev/null
+    stty "$old_stty"
+    tput cnorm
+    tput rmcup
+    exit 0
+}
+trap cleanup EXIT SIGINT SIGTERM
+
+# hide cursor etc (tui feel)
+tput smcup
+tput civis
+stty -echo -icanon min 0 time 0
+clear
+
+# q to quit
+(
+    while IFS= read -n1 key 2>/dev/null; do
+        [[ "$key" == "q" || "$key" == "Q" ]] && kill -SIGINT $$
+    done
+) &
+KEY_PID=$!
+
+# color
+LYRIC_COLOR="#FFFFFF"
+color_mtime=0
+reload_color() {
+    local f="$HOME/.config/sptlrx/lyric-color.env"
+    if [[ -f "$f" ]]; then
+        local mt
+        mt=$(stat -c %Y "$f" 2>/dev/null)
+        if [[ "$mt" != "$color_mtime" ]]; then
+            # shellcheck source=/dev/null
+            source "$f"
+            color_mtime="$mt"
+        fi
+    fi
+}
+reload_color
+
+# process substitution keeps the loop
+showing=false
+while IFS= read -r line; do
+    # clear lyrics when empty line
+    if [[ -z "$line" ]]; then
+        if $showing; then
+            clear
+            showing=false
+        fi
+        continue
+    fi
+
+    showing=true
+    reload_color
+
+    cols=$(tput cols)
+    rows=$(tput lines)
+
+    # render figlet and measure
+    rendered=$(figlet -c -w "$cols" "$line")
+    line_count=$(printf '%s\n' "$rendered" | wc -l)
+    padding=$(( (rows - line_count) / 2 ))
+    [[ $padding -lt 0 ]] && padding=0
+
+    clear
+    [[ $padding -gt 0 ]] && printf '%*s' "$padding" '' | tr ' ' '\n'
+    gum style --foreground "$LYRIC_COLOR" "$rendered"
+done < <(sptlrx pipe)
