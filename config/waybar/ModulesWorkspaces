@@ -264,7 +264,7 @@
 		"title<.*messenger.*>": " ",
 		"title<.*facebook.*>": " ",
 		"title<.*reddit.*>": " ",
-
+    "title<.*netflix.*>": "󰝆 ",
 
 		"title<.*ChatGPT.*>": "󰚩 ",
 		"title<.*deepseek.*>": "󰚩 ",
