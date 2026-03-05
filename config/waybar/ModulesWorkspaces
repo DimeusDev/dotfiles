@@ -252,6 +252,7 @@
 		"class<kitty-dropterm>": " ",
 		"class<com.mitchellh.ghostty>": " ",
 		"class<org.wezfurlong.wezterm>": " ",
+    "class<org.remmina.Remmina>": " ",
 
 		"class<[Tt]hunderbird|[Tt]hunderbird-esr>": " ",
 		"class<eu.betterbird.Betterbird>": " ",
