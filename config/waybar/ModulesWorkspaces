@@ -236,7 +236,7 @@
 		"title<.*reddit.*>": " ",
 
 		"class<firefox|org.mozilla.firefox|librewolf|floorp|mercury-browser|[Cc]achy-browser>": " ",
-		"class<zen>": "󰰷 ",
+		"class<zen>": "󰺕 ",
     "class<ssh-session>": " ",
     "class<lavat>": "󰟕 ",
 		"class<waterfox|waterfox-bin>": " ",
