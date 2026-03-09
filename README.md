@@ -1,6 +1,6 @@
 # Dimeus Dotfiles
 
-**Clean, minimal Hyprland dotfiles for Arch Linux**
+**Clean Hyprland dotfiles for Arch Linux**
 
 ---
 
@@ -13,7 +13,12 @@
 - **Kitty** - Terminal emulator
 - **Neovim** - Text editor
 - **Zsh + Oh my Zsh** - Shell configuration
-- **60+ Wallpapers** - Hand picked [wallpapers](https://github.com/DimeusDev/wallpapers)
+- **170+ Wallpapers** - Hand picked [wallpapers](https://github.com/DimeusDev/wallpapers)
+
+---
+
+## Showcase Video (click on the thumbnail)
+[![showcase](https://img.youtube.com/vi/xtT5bgM6kXA/0.jpg)](https://www.youtube.com/watch?v=xtT5bgM6kXA)
 
 ---
 
