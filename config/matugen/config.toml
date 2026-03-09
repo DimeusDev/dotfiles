@@ -43,7 +43,7 @@ output_path = '~/.config/matugen/generated/hyprlock-colors.conf'
 
 [templates.waybar]
 input_path  = '~/.config/matugen/templates/colors.css'
-output_path = '~/.config/matugen/generated/waybar-colors.css'
+output_path = '~/.config/waybar/colors.css'
 post_hook   = '''
 mkdir -p $HOME/.config/gtk-3.0;
 cp $HOME/.config/matugen/generated/gtk-3.css $HOME/.config/gtk-3.0/gtk.css;
