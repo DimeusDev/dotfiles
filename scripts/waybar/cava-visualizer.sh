@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # cava visualizer for waybar (run only when audio playing)
 bar="▁▂▃▄▅▆▇█"
 dict="s/;//g"
@@ -54,10 +54,13 @@ start_pipeline() {
         elif (( silent_since == 0 )); then
             printf -v silent_since '%(%s)T' -1
             echo "$f"
-        elif (( $(printf '%(%s)T' -1) - silent_since < GRACE )); then
-            echo "$f"
         else
-            echo ""
+            printf -v _now '%(%s)T' -1
+            if (( _now - silent_since < GRACE )); then
+                echo "$f"
+            else
+                echo ""
+            fi
         fi
     done &
     PIPELINE_PID=$!
@@ -72,11 +75,12 @@ stop_pipeline() {
     echo ""
 }
 
-last_audio=$(( $(date +%s) - GRACE - 1 ))
+printf -v _t '%(%s)T' -1
+last_audio=$(( _t - GRACE - 1 ))
 last_check=0
 
 while true; do
-    now=$(date +%s)
+    printf -v now '%(%s)T' -1
 
     if (( now - last_check >= 1 )); then
         last_check=$now

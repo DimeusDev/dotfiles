@@ -1,24 +1,19 @@
 #!/usr/bin/env bash
-# Volume listener for eww
+# volume listener for eww
 
 update_vol() {
-    local raw vol muted
+    local raw vol volico
     raw=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
-    vol=$(echo "$raw" | awk '{printf "%.0f", $2 * 100}')
-    muted=$(echo "$raw" | grep -c MUTED)
-    if [ "$muted" -eq 1 ]; then
-        eww update volico="󰖁"
-        eww update get_vol="0"
-    else
-        eww update volico="󰕾"
-        eww update get_vol="$vol"
-    fi
+    [[ -z "$raw" ]] && return
+    read -r vol volico < <(awk '{
+        muted = ($0 ~ /MUTED/)
+        print (muted ? 0 : int($2 * 100)), (muted ? "󰖁" : "󰕾")
+    }' <<< "$raw")
+    eww update volico="$volico" get_vol="$vol"
 }
 
-# initial read
 update_vol
 
-# listen for sink changes
-pactl subscribe | stdbuf -oL grep --line-buffered "Event 'change' on sink" | while read -r _; do
+pactl subscribe | grep --line-buffered "Event 'change' on sink" | while read -r _; do
     update_vol
 done

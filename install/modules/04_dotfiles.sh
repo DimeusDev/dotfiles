@@ -66,13 +66,8 @@ main() {
     # set waybar layout
     local waybar_cfg="$HOME/.config/waybar/config.jsonc"
     if [[ -f "$waybar_cfg" ]] && [[ "${SYSTEM_TYPE:-desktop}" == "laptop" ]]; then
-        if [[ "${POWER_MANAGER:-ppd}" == "tlp" ]]; then
-            sed -i 's|layouts/desktop.jsonc|layouts/laptop-tlp.jsonc|' "$waybar_cfg"
-            log_substep "waybar set to laptop-tlp layout"
-        else
-            sed -i 's|layouts/desktop.jsonc|layouts/laptop.jsonc|' "$waybar_cfg"
-            log_substep "waybar set to laptop layout"
-        fi
+        sed -i 's|layouts/desktop.jsonc|layouts/laptop.jsonc|' "$waybar_cfg"
+        log_substep "waybar set to laptop layout"
     fi
 
     # deploy scripts to ~/.local/bin

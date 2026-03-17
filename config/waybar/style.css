@@ -186,7 +186,7 @@ tooltip label{
 	margin: 0 0 0 5px;
 }
 /* indicators--- */
-#custom-hypridle.notactive,
+#custom-hypridle.active,
 #idle_inhibitor.activated {
 	color: #39FF14;
 }

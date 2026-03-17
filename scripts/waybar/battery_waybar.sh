@@ -1,14 +1,18 @@
 #!/usr/bin/env bash
 # waybar custom battery module with power profile in tooltip
 
-BAT_PATH=$(ls -d /sys/class/power_supply/BAT* 2>/dev/null | head -1)
-if [[ -z "$BAT_PATH" ]]; then
+shopt -s nullglob
+bat_paths=( /sys/class/power_supply/BAT* )
+shopt -u nullglob
+
+if [[ ${#bat_paths[@]} -eq 0 ]]; then
     printf '{"text":"","tooltip":"No battery","percentage":0,"class":"none"}\n'
     exit 0
 fi
 
-capacity=$(cat "$BAT_PATH/capacity" 2>/dev/null || echo 0)
-status=$(cat "$BAT_PATH/status" 2>/dev/null || echo "Unknown")
+BAT_PATH="${bat_paths[0]}"
+capacity=$(<"$BAT_PATH/capacity")
+status=$(<"$BAT_PATH/status")
 
 icons=("󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹")
 icon_idx=$(( capacity / 10 ))
@@ -16,45 +20,35 @@ icon_idx=$(( capacity / 10 ))
 icon="${icons[$icon_idx]}"
 
 case "$status" in
-    Charging)    text=" ${capacity}%" ;;
-    Full)        text="󱘖" ;;
-    *)           text="${icon} ${capacity}%" ;;
+    Charging) text=" ${capacity}%" ;;
+    Full)     text="󱘖" ;;
+    *)        text="${icon} ${capacity}%" ;;
 esac
 
 # power profile
-if command -v powerprofilesctl >/dev/null 2>&1 && \
-   systemctl is-active --quiet power-profiles-daemon 2>/dev/null; then
-    profile=$(powerprofilesctl get 2>/dev/null || echo "balanced")
-    case "$profile" in
-        performance) pw_name="Performance" ;;
-        balanced)    pw_name="Balanced" ;;
-        power-saver) pw_name="Power Saver" ;;
-        *)           pw_name="$profile" ;;
-    esac
-elif command -v tlp >/dev/null 2>&1; then
-    ac=$(cat /sys/class/power_supply/AC*/online 2>/dev/null | head -1)
-    if [[ "$ac" == "1" ]]; then
-        pw_name="AC (Performance)"
-    else
-        pw_name="Battery (Power Save)"
-    fi
-else
-    pw_name="No power manager"
-fi
+profile=$(powerprofilesctl get 2>/dev/null) || profile="balanced"
+case "$profile" in
+    performance) pw_name="Performance" ;;
+    balanced)    pw_name="Balanced" ;;
+    power-saver) pw_name="Power Saver" ;;
+    *)           pw_name="$profile" ;;
+esac
 
-# time remaining via upower
+# time remaining via sysfs
 time_str=""
-if command -v upower >/dev/null 2>&1; then
-    udev_path=$(upower -e 2>/dev/null | grep -i 'BAT' | head -1)
-    if [[ -n "$udev_path" ]]; then
-        upower_out=$(upower -i "$udev_path" 2>/dev/null)
-        t_empty=$(echo "$upower_out" | awk '/time to empty/{print $4, $5}')
-        t_full=$(echo "$upower_out" | awk '/time to full/{print $4, $5}')
-        if [[ -n "$t_empty" ]]; then
-            time_str=" - ${t_empty} remaining"
-        elif [[ -n "$t_full" ]]; then
-            time_str=" - ${t_full} to full"
-        fi
+if [[ "$status" == "Discharging" ]] && [[ -r "$BAT_PATH/time_to_empty_avg" ]]; then
+    t_secs=$(<"$BAT_PATH/time_to_empty_avg")
+    if (( t_secs > 0 && t_secs < 86400 )); then
+        h=$(( t_secs / 3600 ))
+        m=$(( (t_secs % 3600) / 60 ))
+        (( h > 0 )) && time_str=" - ${h}h ${m}m remaining" || time_str=" - ${m}m remaining"
+    fi
+elif [[ "$status" == "Charging" ]] && [[ -r "$BAT_PATH/time_to_full_avg" ]]; then
+    t_secs=$(<"$BAT_PATH/time_to_full_avg")
+    if (( t_secs > 0 && t_secs < 86400 )); then
+        h=$(( t_secs / 3600 ))
+        m=$(( (t_secs % 3600) / 60 ))
+        (( h > 0 )) && time_str=" - ${h}h ${m}m to full" || time_str=" - ${m}m to full"
     fi
 fi
 
@@ -70,6 +64,5 @@ else
 fi
 
 tooltip="Profile: ${pw_name}\\n${status}${time_str}"
-
 printf '{"text":"%s","tooltip":"%s","percentage":%d,"class":"%s"}\n' \
     "$text" "$tooltip" "$capacity" "$css"

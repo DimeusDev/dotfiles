@@ -95,15 +95,16 @@
 //	"tooltip-format": "Check KooL Dots update\nIf available",
 //},
 
-// Hypridle inhibitor
+// caffeine - hypridle inhibitor
 "custom/hypridle": {
-	"format": "󱫗 ",
+	"format": "{}",
 	"return-type": "json",
 	"escape": true,
 	"exec-on-event": true,
 	"interval": 60,
-	"exec": "$HOME/.local/bin/toggle_hypridle.sh status",
-	"on-click": "$HOME/.local/bin/toggle_hypridle.sh toggle",
+	"signal": 9,
+	"exec": "$HOME/.local/bin/caffeine_toggle.sh status",
+	"on-click": "$HOME/.local/bin/caffeine_toggle.sh",
 	"on-click-right": "hyprlock"
 },
 

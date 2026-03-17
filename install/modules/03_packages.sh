@@ -191,18 +191,11 @@ main() {
     fi
 
     # power management
-    if [[ "${POWER_MANAGER:-ppd}" == "tlp" ]]; then
-        log_info "installing TLP"
-        sudo systemctl disable --now power-profiles-daemon.service 2>/dev/null || true
-        sudo pacman -Rns --noconfirm power-profiles-daemon 2>/dev/null || true
-        install_packages "tlp" "tlp-rdw"
-    else
-        log_info "installing power-profiles-daemon"
-        sudo systemctl disable --now tlp.service     2>/dev/null || true
-        sudo systemctl disable --now tlp-rdw.service 2>/dev/null || true
-        sudo pacman -Rns --noconfirm tlp tlp-rdw 2>/dev/null || true
-        install_package_safe "power-profiles-daemon"
-    fi
+    log_info "installing power-profiles-daemon"
+    sudo systemctl disable --now tlp.service     2>/dev/null || true
+    sudo systemctl disable --now tlp-rdw.service 2>/dev/null || true
+    sudo pacman -Rns --noconfirm tlp tlp-rdw 2>/dev/null || true
+    install_package_safe "power-profiles-daemon"
 
     # file manager
     case "${FILE_MANAGER:-}" in
@@ -294,8 +287,6 @@ main() {
                 AUR_FAILED_REASONS+=("colloid-icon-theme: git clone failed")
             fi
         fi
-
-        install_aur_safe "caffeine-ng"
 
         log_substep "Google Sans Flex font"
         if ! fc-list | grep -qi "Google Sans Flex"; then

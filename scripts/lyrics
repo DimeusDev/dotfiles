@@ -1,74 +1,92 @@
 #!/usr/bin/env bash
 # figlet lyrics via sptlrx pipe
 
-# Save terminal state
-old_stty=$(stty -g)
+old_stty=$(stty -g < /dev/tty)
 
 cleanup() {
     kill "$KEY_PID" 2>/dev/null
-    stty "$old_stty"
-    tput cnorm
+    stty "$old_stty" < /dev/tty
+    printf '\033[?25h'
     tput rmcup
     exit 0
 }
 trap cleanup EXIT SIGINT SIGTERM
 
-# hide cursor etc (tui feel)
 tput smcup
-tput civis
-stty -echo -icanon min 0 time 0
-clear
+printf '\033[H\033[2J\033[?25l'
+stty -echo -icanon < /dev/tty
 
 # q to quit
-(
-    while IFS= read -n1 key 2>/dev/null; do
-        [[ "$key" == "q" || "$key" == "Q" ]] && kill -SIGINT $$
-    done
-) &
+( while IFS= read -r -n1 key < /dev/tty; do
+    [[ "$key" == "q" || "$key" == "Q" ]] && kill -SIGINT $$
+done ) &
 KEY_PID=$!
 
-# color
 LYRIC_COLOR="#FFFFFF"
 color_mtime=0
 reload_color() {
     local f="$HOME/.config/sptlrx/lyric-color.env"
-    if [[ -f "$f" ]]; then
-        local mt
-        mt=$(stat -c %Y "$f" 2>/dev/null)
-        if [[ "$mt" != "$color_mtime" ]]; then
-            # shellcheck source=/dev/null
-            source "$f"
-            color_mtime="$mt"
-        fi
-    fi
+    [[ ! -f "$f" ]] && return
+    local mt
+    mt=$(stat -c %Y "$f" 2>/dev/null)
+    [[ "$mt" == "$color_mtime" ]] && return
+    source "$f"
+    color_mtime="$mt"
 }
 reload_color
 
-# process substitution keeps the loop
+COLS=$(tput cols)
+ROWS=$(tput lines)
+last_line="" last_cols=0 last_rows=0 cur_line=""
+
+render() {
+    local line="$1"
+    [[ "$line" == "$last_line" && "$COLS" == "$last_cols" && "$ROWS" == "$last_rows" ]] && return
+    reload_color
+    last_line="$line"; last_cols=$COLS; last_rows=$ROWS
+
+    local rendered
+    rendered=$(figlet -c -w "$COLS" "$line")
+
+    # count lines without subprocess
+    local no_nl="${rendered//$'\n'/}"
+    local line_count=$(( ${#rendered} - ${#no_nl} ))
+    [[ $line_count -lt 1 ]] && line_count=1
+
+    local padding=$(( (ROWS - line_count) / 2 ))
+    [[ $padding -lt 0 ]] && padding=0
+
+    # hex to rgb
+    local hex="${LYRIC_COLOR#\#}"
+    local r=$((16#${hex:0:2})) g=$((16#${hex:2:2})) b=$((16#${hex:4:2}))
+
+    local pad='' i
+    for ((i=0; i<padding; i++)); do pad+=$'\n'; done
+
+    # write
+    printf '\033[H\033[2J%s\033[38;2;%d;%d;%dm%s\033[0m' \
+        "$pad" "$r" "$g" "$b" "$rendered"
+}
+
+on_resize() {
+    COLS=$(tput cols)
+    ROWS=$(tput lines)
+    last_line=""
+    [[ -n "$cur_line" ]] && render "$cur_line"
+}
+trap on_resize SIGWINCH
+
 showing=false
 while IFS= read -r line; do
-    # clear lyrics when empty line
     if [[ -z "$line" ]]; then
         if $showing; then
-            clear
+            printf '\033[H\033[2J'
             showing=false
+            cur_line="" last_line=""
         fi
         continue
     fi
-
     showing=true
-    reload_color
-
-    cols=$(tput cols)
-    rows=$(tput lines)
-
-    # render figlet and measure
-    rendered=$(figlet -c -w "$cols" "$line")
-    line_count=$(printf '%s\n' "$rendered" | wc -l)
-    padding=$(( (rows - line_count) / 2 ))
-    [[ $padding -lt 0 ]] && padding=0
-
-    clear
-    [[ $padding -gt 0 ]] && printf '%*s' "$padding" '' | tr ' ' '\n'
-    gum style --foreground "$LYRIC_COLOR" "$rendered"
+    cur_line="$line"
+    render "$line"
 done < <(sptlrx pipe)

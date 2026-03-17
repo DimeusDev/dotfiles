@@ -1,21 +1,18 @@
 #!/usr/bin/env bash
-# used to toggle rofi menu (so they dont open twice + they close when pressing again)
+# toggle rofi menus , prevents stacking, closes on repeat press
 
 if [ "$#" -lt 1 ]; then
     exit 1
 fi
 
-script_name=$(realpath "$0")
-args="$*"
-
-if pgrep -af "$script_name" | grep -qv "$args"; then
-    # different menu: kill old and launch the new menu
-    pkill -x rofi
-    "$@"
-elif pgrep -x rofi > /dev/null; then
-    # same menu kill
-    pkill -x rofi
+if pgrep -x rofi > /dev/null; then
+    # exclude self ($$) then check if THIS menu is already open
+    if pgrep -af "toggle_rofi" | grep -v "^$$ " | grep -qF "$(basename "$1")"; then
+        pkill -x rofi
+    else
+        pkill -x rofi
+        "$@"
+    fi
 else
-    # nothing: simply launch
     "$@"
 fi

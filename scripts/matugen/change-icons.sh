@@ -51,4 +51,4 @@ else
 fi
 
 gsettings set org.gnome.desktop.interface icon-theme "$theme"
-notify-send "Icons" "$theme"
+notify-send -u low -t 2000 "Icons" "$theme"

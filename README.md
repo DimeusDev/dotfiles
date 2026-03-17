@@ -17,6 +17,11 @@
 
 ---
 
+## Showcase Video (click on the thumbnail)
+[![showcase](https://img.youtube.com/vi/xtT5bgM6kXA/0.jpg)](https://www.youtube.com/watch?v=xtT5bgM6kXA)
+
+---
+
 <details>
 <summary><strong>Screenshots</strong></summary>
 
@@ -83,3 +88,4 @@ MIT License
 > This dotfiles is not 100% my creation obviously, i used scripts and config from other dotfiles such as [Dusky](https://github.com/dusklinux/dusky) and more..
 
 **Discord: _dimeus**
+

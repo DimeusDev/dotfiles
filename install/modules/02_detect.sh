@@ -39,25 +39,6 @@ main() {
 
     log_success "system type: $SYSTEM_TYPE"
 
-    # power manager 
-    local POWER_MANAGER=""
-    local pm_choice=""
-    if [[ "$SYSTEM_TYPE" == "laptop" ]]; then
-        pm_choice=$(ask_choice "Power management daemon:" \
-            "TLP + TLP-RDW (recommended better battery for laptop)" \
-            "power-profiles-daemon (lighter work fine)")
-    else
-        pm_choice=$(ask_choice "Power management daemon:" \
-            "power-profiles-daemon (recommended for desktop)" \
-            "TLP + TLP-RDW (not rlly for desktop)")
-    fi
-    if [[ "$pm_choice" == *"TLP"* ]]; then
-        POWER_MANAGER="tlp"
-    else
-        POWER_MANAGER="ppd"
-    fi
-    log_success "power manager: $POWER_MANAGER"
-
     local USE_BLUETOOTH=false
     if ask_yes_no "Do you use Bluetooth?" "n"; then
         USE_BLUETOOTH=true
@@ -107,7 +88,6 @@ main() {
 # generated: $(date)
 
 SYSTEM_TYPE="$SYSTEM_TYPE"
-POWER_MANAGER="$POWER_MANAGER"
 USE_BLUETOOTH=$USE_BLUETOOTH
 USE_BTRFS=$USE_BTRFS
 FILE_MANAGER="$FILE_MANAGER"
@@ -122,7 +102,6 @@ EOF
     log_step "Configuration Summary"
     echo ""
     printf "  ${CYAN}System Type:${RESET}       %s\n" "$SYSTEM_TYPE"
-    printf "  ${CYAN}Power Manager:${RESET}     %s\n" "$POWER_MANAGER"
     printf "  ${CYAN}Bluetooth:${RESET}         %s\n" "$USE_BLUETOOTH"
     printf "  ${CYAN}BTRFS Tools:${RESET}       %s\n" "$USE_BTRFS"
     printf "  ${CYAN}File Manager:${RESET}      %s\n" "$FILE_MANAGER"
@@ -137,7 +116,7 @@ EOF
         exit 1
     fi
 
-    export SYSTEM_TYPE POWER_MANAGER USE_BLUETOOTH USE_BTRFS FILE_MANAGER BROWSER TEXT_EDITOR AUR_HELPER INSTALL_WALLPAPERS
+    export SYSTEM_TYPE USE_BLUETOOTH USE_BTRFS FILE_MANAGER BROWSER TEXT_EDITOR AUR_HELPER INSTALL_WALLPAPERS
 
     log_success "confirmed"
 }

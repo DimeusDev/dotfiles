@@ -30,11 +30,11 @@ confirm_cmd() {
 }
 
 confirm_exit() {
-    echo -e "$YES\n$NO" | confirm_cmd
+    printf '%s\n%s\n' "$YES" "$NO" | confirm_cmd
 }
 
 run_rofi() {
-    echo -e "$LOCK\n$SUSPEND\n$LOGOUT\n$REBOOT\n$SHUTDOWN" | rofi_cmd
+    printf '%s\n%s\n%s\n%s\n%s\n' "$LOCK" "$SUSPEND" "$LOGOUT" "$REBOOT" "$SHUTDOWN" | rofi_cmd
 }
 
 run_cmd() {

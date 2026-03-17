@@ -1,8 +1,7 @@
 /* waybar
- * to switch layout change the line 11
+ * to switch layout change the line 10
  *   layouts/desktop.jsonc - desktop one no battery networks stuff etc
  *   layouts/laptop.jsonc  - battery, backlight, power-profile, network, bluetooth
-  *   layouts/laptop-tlp.jsonc  - battery#tlp (work with tlp), backlight, power-profile, network, bluetooth
  */
 {
 "include": [

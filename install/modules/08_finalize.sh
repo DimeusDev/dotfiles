@@ -52,7 +52,6 @@ main() {
 
     echo "${CYAN}Troubleshooting:${RESET}"
     echo ""
-    echo "   • Verify services: ${BOLD}systemctl --user status pipewire${RESET}"
     echo "   • Reload Hyprland: ${BOLD}Alt+R${RESET}"
     echo "   • Restart Waybar: ${BOLD}Alt+9${RESET}"
     echo "   • GitHub: ${BOLD}https://github.com/DimeusDev/dotfiles${RESET}"

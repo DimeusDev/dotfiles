@@ -14,8 +14,8 @@ if [ -z "$BAT_PATH" ]; then
     exit 0
 fi
 
-STATUS=$(cat "$BAT_PATH/status")
-CAPACITY=$(cat "$BAT_PATH/capacity")
+STATUS=$(<"$BAT_PATH/status")
+CAPACITY=$(<"$BAT_PATH/capacity")
 
 if [ "$STATUS" == "Charging" ]; then
     echo "⚡ $CAPACITY%"

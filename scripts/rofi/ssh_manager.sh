@@ -18,6 +18,12 @@ log() {
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> "$LOG_FILE"
 }
 
+trim_var() {
+  local -n _v=$1
+  _v="${_v#"${_v%%[![:space:]]*}"}"
+  _v="${_v%"${_v##*[![:space:]]}"}"
+}
+
 # ssh agent socket
 if [ -z "${SSH_AUTH_SOCK:-}" ]; then
   if [ -n "${XDG_RUNTIME_DIR:-}" ]; then
@@ -64,14 +70,10 @@ build_menu() {
   # format: name | proto | target | auth | key_path | icon
   while IFS='|' read -r name proto target auth key_path icon; do
     [[ "$name" =~ ^[[:space:]]*# ]] && continue
-    name="$(echo "$name" | xargs)"
+    trim_var name
     [[ -z "$name" ]] && continue
 
-    proto="$(echo "$proto"       | xargs)"
-    target="$(echo "$target"     | xargs)"
-    auth="$(echo "$auth"         | xargs)"
-    key_path="$(echo "$key_path" | xargs)"
-    icon="$(echo "$icon"         | xargs)"
+    trim_var proto; trim_var target; trim_var auth; trim_var key_path; trim_var icon
 
     # defaults
     auth="${auth:-password}"
@@ -136,10 +138,11 @@ show_menu() {
 
 parse_selection() {
   local choice
-  choice=$(cat "$CHOICE_FILE")
+  choice=$(<"$CHOICE_FILE")
 
   local name
-  name=$(echo "$choice" | sed 's/&#10;.*//;s/<[^>]*>//g' | xargs)
+  name=$(echo "$choice" | sed 's/&#10;.*//;s/<[^>]*>//g')
+  trim_var name
 
   local info="${MENU_DATA[$name]:-}"
   if [ -z "$info" ]; then
@@ -215,8 +218,7 @@ connect_rdp() {
     rdp_host="$target"
   fi
 
-  local rdp_host_clean
-  rdp_host_clean=$(echo "$rdp_host" | tr '.' '-')
+  local rdp_host_clean="${rdp_host//./-}"
 
   local profile
   profile=$(find "$HOME/.local/share/remmina" \
