@@ -146,7 +146,8 @@
 
 "custom/cava_mviz": {
 	"exec": "$HOME/.local/bin/cava-visualizer.sh",
-	"format": "{}"
+	"format": "{}",
+	"tooltip": false
 },
 
 "custom/power": {

@@ -14,7 +14,7 @@ SILENT="▁▁▁▁▁▁▁▁▁▁"
 
 cat > "$CAVA_CFG" <<EOF
 [general]
-framerate = 30
+framerate = 24
 bars = 10
 
 [input]
