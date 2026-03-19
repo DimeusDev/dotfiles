@@ -115,7 +115,7 @@ EOF
     else
         log_substep "generating initial theme"
 
-        if matugen color hex 000000 >/dev/null 2>&1; then
+        if matugen --source-color-index 0 color hex 000000 >/dev/null 2>&1; then
             log_success "initial theme generated"
         else
             log_warn "failed to generate theme"

@@ -49,7 +49,7 @@ if [[ -n "$selection" ]]; then
             --transition-duration 2 \
             --transition-fps 60 201>&- &
 
-        setsid uwsm-app -- matugen --mode dark image "$full_path" 201>&- &
+        setsid uwsm-app -- matugen --mode dark --source-color-index 0 image "$full_path" 201>&- &
     else
         rm -f "$CACHE_FILE"
         notify-send -u critical "Wallpaper" "path not found, cache cleared"
