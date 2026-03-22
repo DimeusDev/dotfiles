@@ -251,8 +251,8 @@
 	"on-click-middle": "playerctl play-pause",
 	"on-click": "playerctl previous",
 	"on-click-right": "playerctl next",
-	"on-scroll-up": "playerctl volume 0.05+",
-	"on-scroll-down": "playerctl volume 0.05-",
+	"on-scroll-up": "playerctl volume 0.01+",
+	"on-scroll-down": "playerctl volume 0.01-",
 	"tooltip": true,
 	"tooltip-format": "{status_icon} {dynamic}\nLeft Click: previous\nMid Click: Pause\nRight Click: Next\nScroll: Volume",
 	"player-icons": {
