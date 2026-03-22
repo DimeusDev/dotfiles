@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Music Setup
+GenericName=Music Environment
+Comment=Launches the full music setup: RMPC, Lavat, TTY-Clock, Lyrics, Cava
+Exec=bash -c 'uwsm-app -- kitty --class rmpc -e rmpc & uwsm-app -- kitty --class lavat -e ~/.local/bin/lavat.sh & uwsm-app -- kitty --class tty-clock -e tty-clock -c -C 4 & bash -c "exec uwsm-app -- kitty --class lyrics -e ~/.local/bin/lyrics" & uwsm-app -- kitty --class cava -e cava'
+Terminal=false
+Categories=Audio;Music;
+Keywords=music;rmpc;cava;lyrics;lavat;tty-clock;tui;
+Icon=audio-headphones
+StartupNotify=false

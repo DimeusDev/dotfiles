@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Lyrics
+GenericName=ASCII Lyrics
+Comment=ASCII lyrics synced to MPD
+Exec=bash -c 'exec uwsm-app -- kitty --class lyrics -e ~/.local/bin/lyrics'
+Terminal=false
+Categories=Audio;Utility;
+Keywords=lyrics;music;ascii;tui;
+Icon=utilities-terminal
+StartupNotify=false
