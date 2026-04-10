@@ -98,7 +98,7 @@ main() {
 
     # desktop
     local pkgs_desktop=(
-        "waybar" "swww" "hyprlock" "hypridle" "hyprsunset" "hyprpicker"
+        "waybar" "awww" "hyprlock" "hypridle" "hyprsunset" "hyprpicker"
         "swaync" "swayosd" "rofi" "brightnessctl" "pamixer" "wlogout"
         "wtype"
         "xorg-xhost"

@@ -13,7 +13,7 @@ fi
 _LIB="${BASH_SOURCE[0]%/*}/_wallpaper_cache_lib.sh"
 source "$_LIB" || { notify-send -u critical "Wallpaper" "cache lib not found"; exit 1; }
 
-for cmd in magick rofi swww notify-send; do
+for cmd in magick rofi awww notify-send; do
     if ! command -v "$cmd" &>/dev/null; then
         notify-send -u critical "Wallpaper" "missing: $cmd"
         exit 1
@@ -44,7 +44,7 @@ if [[ -n "$selection" ]]; then
     if [[ -n "$full_path" && -f "$full_path" ]]; then
         cp "$full_path" ~/.cache/current_wallpaper 2>/dev/null
 
-        swww img "$full_path" \
+        awww img "$full_path" \
             --transition-type grow \
             --transition-duration 2 \
             --transition-fps 60 201>&- &
