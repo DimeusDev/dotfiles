@@ -1,0 +1,41 @@
+/**
+ * @name Discord Mica (matugen)
+ * @author Coolkie + Dimeus
+ * @version 1.0-matugen
+ * @description Discord with mica + matugen colors
+ * @source https://github.com/PL7963/Discord-Mica/blob/main/src/main.css
+ * @website http://github.com/PL7963/
+ * @invite mh5Tzm43m9
+ */
+
+@import url("https://discord-mica.pages.dev/src/main.css");
+
+:root {
+  /* Dark mode */
+  --dark-bg: transparent;
+  --dark-flyout: color-mix(in srgb, {{colors.surface.default.hex}} 78%, transparent);
+  --dark-accent: {{colors.primary.default.hex}};
+  --dark-accent-hovered: {{colors.primary_fixed_dim.default.hex}};
+  --dark-accent-font-color: {{colors.on_primary.default.hex}};
+  --dark-button: color-mix(in srgb, {{colors.surface_container_high.default.hex}} 88%, black);
+  --dark-button-border: {{colors.outline_variant.default.hex}};
+  --dark-button-font-color: {{colors.on_surface.default.hex}};
+  --dark-background-accent: color-mix(in srgb, {{colors.surface_container.default.hex}} 90%, transparent);
+  --dark-status-panel: color-mix(in srgb, {{colors.surface_container_high.default.hex}} 42%, transparent);
+
+  /* Light mode */
+  --light-bg: transparent;
+  --light-flyout: color-mix(in srgb, {{colors.surface_bright.default.hex}} 96%, white);
+  --light-accent: {{colors.primary.default.hex}};
+  --light-accent-hovered: {{colors.primary_fixed.default.hex}};
+  --light-accent-font-color: {{colors.on_primary.default.hex}};
+  --light-button: color-mix(in srgb, {{colors.surface_container_low.default.hex}} 96%, white);
+  --light-button-border: {{colors.outline_variant.default.hex}};
+  --light-button-font-color: {{colors.on_surface.default.hex}};
+  --light-background-accent: color-mix(in srgb, {{colors.surface_container_high.default.hex}} 88%, transparent);
+  --light-status-panel: color-mix(in srgb, {{colors.surface_bright.default.hex}} 45%, transparent);
+
+  /* Titlebar */
+  --custom-app-top-bar-height: calc(24px + var(--space-sm));
+  --title-bar-icon: flex;
+}

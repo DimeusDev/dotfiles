@@ -1,0 +1,2 @@
+-- plugins.lua
+-- Hyprexpo does not work with 0.55 sadly

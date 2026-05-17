@@ -33,8 +33,8 @@ output_path = '~/.config/matugen/generated/qt6ct-colors.conf'
 # system components (wayland, bars, notifications)
 
 [templates.hyprland]
-input_path  = '~/.config/matugen/templates/hyprland-colors.conf'
-output_path = '~/.config/matugen/generated/hyprland-colors.conf'
+input_path  = '~/.config/matugen/templates/hyprland-colors.lua'
+output_path = '~/.config/hypr/source/hyprland-colors.lua'
 post_hook   = 'hyprctl reload'
 
 [templates.hyprlock]
@@ -171,6 +171,38 @@ output_path = '~/.config/matugen/generated/midnight-discord.css'
 post_hook   = '''
 mkdir -p $HOME/.config/equibop/themes/;
 ln -nfs $HOME/.config/matugen/generated/midnight-discord.css $HOME/.config/equibop/themes/midnight-discord.css
+'''
+
+[templates.vesktop_midnight_blurred]
+input_path  = '~/.config/matugen/templates/midnight-blurred-discord.css'
+output_path = '~/.config/matugen/generated/midnight-blurred-discord.css'
+post_hook   = '''
+mkdir -p $HOME/.config/vesktop/themes/;
+ln -nfs $HOME/.config/matugen/generated/midnight-blurred-discord.css $HOME/.config/vesktop/themes/midnight-blurred.theme.css
+'''
+
+[templates.equibop_midnight_blurred]
+input_path  = '~/.config/matugen/templates/midnight-blurred-discord.css'
+output_path = '~/.config/matugen/generated/midnight-blurred-discord.css'
+post_hook   = '''
+mkdir -p $HOME/.config/equibop/themes/;
+ln -nfs $HOME/.config/matugen/generated/midnight-blurred-discord.css $HOME/.config/equibop/themes/midnight-blurred.theme.css
+'''
+
+[templates.vesktop_discord_mica]
+input_path  = '~/.config/matugen/templates/discord-mica.theme.css'
+output_path = '~/.config/matugen/generated/discord-mica.theme.css'
+post_hook   = '''
+mkdir -p $HOME/.config/vesktop/themes/;
+ln -nfs $HOME/.config/matugen/generated/discord-mica.theme.css $HOME/.config/vesktop/themes/discord-mica.theme.css
+'''
+
+[templates.equibop_discord_mica]
+input_path  = '~/.config/matugen/templates/discord-mica.theme.css'
+output_path = '~/.config/matugen/generated/discord-mica.theme.css'
+post_hook   = '''
+mkdir -p $HOME/.config/equibop/themes/;
+ln -nfs $HOME/.config/matugen/generated/discord-mica.theme.css $HOME/.config/equibop/themes/discord-mica.theme.css
 '''
 
 # media & system monitor

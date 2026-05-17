@@ -1,0 +1,3 @@
+-- power-mode — managed by power_mode.sh and visual_mode_set.sh
+-- Empty = Normal mode (appearance.lua settings)
+-- Filled = Performance mode (overrides appearance.lua)

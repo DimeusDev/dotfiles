@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# rofi power mode switcher, writes to hypr/source/power-mode.conf
+# rofi power mode switcher, writes to hypr/source/power_mode.lua
 
-CONF="$HOME/.config/hypr/source/power-mode.conf"
+CONF="$HOME/.config/hypr/source/power_mode.lua"
 
 chosen=$(printf '⚡  Performance\n  Normal' | \
     rofi -dmenu -p "Power Mode" -config "$HOME/.config/rofi/config.rasi" -format s)
@@ -11,21 +11,17 @@ chosen=$(printf '⚡  Performance\n  Normal' | \
 case "$chosen" in
     *Performance*)
         cat > "$CONF" << 'EOF'
-# Performance mode (disable all effects)
-decoration {
-    active_opacity   = 1.0
-    inactive_opacity = 1.0
-    dim_inactive     = false
-    shadow {
-        enabled = false
-    }
-    blur {
-        enabled = false
-    }
-}
-animations {
-    enabled = false
-}
+-- Performance mode (disable all effects)
+hl.config({
+    decoration = {
+        active_opacity   = 1.0,
+        inactive_opacity = 1.0,
+        dim_inactive     = false,
+        shadow = { enabled = false },
+        blur   = { enabled = false },
+    },
+    animations = { enabled = false },
+})
 EOF
         hyprctl keyword decoration:blur:enabled false
         hyprctl keyword decoration:shadow:enabled false
@@ -35,7 +31,7 @@ EOF
         notify-send -u low -t 2000 "Power Mode" "Performance - effects off"
         ;;
     *Normal*)
-      printf '# Normal mode (using appearance.conf)\n' > "$CONF"
+        printf '-- Normal mode (using appearance.lua settings)\n' > "$CONF"
         hyprctl reload
         notify-send -u low -t 2000 "Power Mode" "Normal - settings restored"
         ;;
